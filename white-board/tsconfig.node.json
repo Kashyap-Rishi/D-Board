@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["es6", "dom"],
+    "lib": ["es5", "dom"],
     "composite": true,
     "skipLibCheck": true,
     "module": "ESNext",

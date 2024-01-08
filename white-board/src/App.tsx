@@ -1,11 +1,14 @@
 
 import './App.css'
+import WhiteBoard from './components/WhiteBoard'
 
 function App() {
   
 
   return (
-<>hello</>
+<>
+<WhiteBoard/>
+</>
   )
 }
 
