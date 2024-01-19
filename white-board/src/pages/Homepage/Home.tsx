@@ -1,10 +1,9 @@
 
-import Forms from '../../components/Forms/Forms'
 
 const Home = () => {
   return (
     <div>
-        <Forms/>
+       hello
     </div>
   )
 }
