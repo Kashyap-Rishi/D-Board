@@ -1,11 +1,25 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import WhiteBoard from "../../components/Whiteboard/WhiteBoard";
 import './room.css'
 
+interface Element {
+  type: string;
+  offsetX: number;
+  height:number;
+  width:number;
+  offsetY: number;
+  path: number[][];
+  stroke: string;
+}
+
 const Room = () => {
+
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null)
 
 const [tool,setTool]=useState("pencil");
 const [color,setColor]=useState("black");
+const [elements, setElements] = useState<Element[]>([]);
 
   return (
     <div>
@@ -61,7 +75,11 @@ const [color,setColor]=useState("black");
          </div>
 
           <div className="canvas-box">
-            <WhiteBoard/>
+            <WhiteBoard canvasRef={canvasRef} ctxRef={ctxRef}
+            elements={elements}
+            setElements={setElements}
+          tool={tool}
+            />
           </div>
 
     </div>
