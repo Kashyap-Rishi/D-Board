@@ -20,6 +20,43 @@ const Room = () => {
 const [tool,setTool]=useState("pencil");
 const [color,setColor]=useState("black");
 const [elements, setElements] = useState<Element[]>([]);
+const [history, setHistory] = useState<Element[][]>([]);
+
+const handleClearCanvas=()=>{
+  const canvas=canvasRef.current;
+  if(canvas){
+  const ctx=canvas.getContext("2d");
+  if(ctx){
+   ctx.fillStyle="white";
+   ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height)
+   }
+  }
+   setElements([])
+
+
+
+}
+const undoOperation = () => {
+  setHistory((prevHistory) => {
+    const updatedHistory: Element[][] = [...prevHistory, elements];
+    return updatedHistory;
+  });
+
+  setElements((prevElements) => prevElements.slice(0, prevElements.length - 1));
+};
+
+const redoOperation = () => {
+  setElements((prevElements) => [
+    ...prevElements,
+    ...history[history.length - 1],
+  ]);
+
+  setHistory((prevHistory) => prevHistory.slice(0, prevHistory.length - 1));
+};
 
   return (
     <div>
@@ -66,11 +103,19 @@ const [elements, setElements] = useState<Element[]>([]);
                 
             </div>
             <div >
-<button>Undo</button>
-<button>Redo</button>
+<button
+disabled={elements.length===0}
+onClick={()=> undoOperation()}
+>Undo
+</button>
+<button
+disabled={history.length<1}
+onClick={()=> redoOperation()}
+>Redo
+</button>
             </div>
             <div>
-                <button>Clear Canvas</button>
+                <button onClick={handleClearCanvas}>Clear Canvas</button>
             </div>
          </div>
 
@@ -78,6 +123,7 @@ const [elements, setElements] = useState<Element[]>([]);
             <WhiteBoard canvasRef={canvasRef} ctxRef={ctxRef}
             elements={elements}
             setElements={setElements}
+            color={color}
           tool={tool}
             />
           </div>

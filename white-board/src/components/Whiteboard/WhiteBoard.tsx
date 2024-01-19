@@ -30,10 +30,11 @@ interface WhiteBoardProps {
   elements: Element[];
   setElements: React.Dispatch<React.SetStateAction<Element[]>>;
   tool:string;
+  color:string;
 
 }
 
-const WhiteBoard: React.FC<WhiteBoardProps> = ({ canvasRef, ctxRef, elements, setElements,tool }) => {
+const WhiteBoard: React.FC<WhiteBoardProps> = ({ canvasRef, ctxRef, elements, setElements,tool, color }) => {
 
   const [isDrawing, setIsDrawing]=useState(false);
 
@@ -46,11 +47,22 @@ useEffect(()=>{
     canvas.height=window.innerHeight*2;
     canvas.width=window.innerWidth*2;
   const ctx=canvas.getContext("2d")
+if(ctx){
+  ctx.strokeStyle=color;
+  ctx.lineWidth=2;
+  ctx.lineCap="round"
+}
+
 
   ctxRef.current=ctx
   }
 
 },[])
+
+useEffect(()=>{
+  if(ctxRef.current)
+    ctxRef.current.strokeStyle=color;
+},[color])
 
 useLayoutEffect(() => {
   const canvas = canvasRef.current;
@@ -65,7 +77,11 @@ useLayoutEffect(() => {
     elements.forEach((element) => {
       if(element.type==="pencil"){
       const pathPoints: Point[] = element.path.map(([x, y]) => [x, y] as Point);
-      roughCanvas.linearPath(pathPoints);
+      roughCanvas.linearPath(pathPoints,{
+        stroke:element.stroke,
+        strokeWidth:5,
+        roughness:0,
+      });
       }
       else if(element.type==="rect"){
 roughCanvas.draw(
@@ -73,13 +89,22 @@ roughCanvas.draw(
     element.offsetX,
     element.offsetY,
     element.width,
-    element.height
+    element.height,
+    {
+      stroke:element.stroke,
+      strokeWidth:5,
+      roughness:0
+    }
   )
 )
       }
       else if(element.type==="line"){
         roughCanvas.draw(
-        roughGenerator.line(element.offsetX,element.offsetY,element.width,element.height)
+        roughGenerator.line(element.offsetX,element.offsetY,element.width,element.height,{
+          stroke:element.stroke,
+          strokeWidth:5,
+          roughness:0
+        })
         );
       }
     });
@@ -98,7 +123,7 @@ const handleMouseDown=(e:React.MouseEvent)=>{
           offsetX,
           offsetY,
           path:[[offsetX,offsetY]],
-          stroke:"black",
+          stroke:color,
   
         },
        ]
@@ -114,7 +139,7 @@ const handleMouseDown=(e:React.MouseEvent)=>{
         offsetY,
         width:offsetX,
         height:offsetY,
-        stroke:"black",
+        stroke:color,
 
       },
      ])
@@ -128,7 +153,7 @@ const handleMouseDown=(e:React.MouseEvent)=>{
         offsetY,
         width:0,
         height:0,
-        stroke:"black",
+        stroke:color,
 
       },
      ])
