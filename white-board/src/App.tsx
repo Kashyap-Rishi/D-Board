@@ -1,14 +1,24 @@
 
 import './App.css'
-import WhiteBoard from './components/WhiteBoard'
 
-function App() {
+import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
+import Home from './pages/Homepage/Home'
+import Room from './pages/Roompage/Room'
+
+
+const App=() => {
   
 
   return (
-<>
-<WhiteBoard/>
-</>
+<div>
+  <Router>
+<Routes>
+<Route  path="/" element={<Home/>}/>
+<Route  path="/:roomId" element={<Room/>}/>
+</Routes>
+</Router>
+
+</div>
   )
 }
 
