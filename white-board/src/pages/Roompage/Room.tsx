@@ -3,9 +3,18 @@ import WhiteBoard from "../../components/Whiteboard/WhiteBoard";
 import './room.css'
 import { Socket } from 'socket.io-client';
 
+interface JoinedUsers{
+  name: string
+  roomId: string
+  userid: string
+  host: boolean
+  presenter: boolean
+}
+
 interface Props{
   user:  { name: string; roomId: string; userid: string; host: boolean; presenter: boolean }
   socket:Socket
+  users:JoinedUsers[]
   
 }
 
@@ -19,7 +28,7 @@ interface Element {
   stroke: string;
 }
 
-const Room = ({user,socket}:Props) => {
+const Room = ({user,socket,users}:Props) => {
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null)
@@ -68,7 +77,7 @@ const redoOperation = () => {
   return (
     <div>
          <h1>Whiteboard sharing app
-          <span>[User online : 0]</span>
+          <span>[User online : {users.length}]</span>
          </h1>
          {
           user?.presenter&&(

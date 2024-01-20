@@ -34,13 +34,20 @@ const App=() => {
     presenter: false,
   });
 
+  const [users,setUsers]=useState([]);
+
   useEffect(()=>{
     socket.on("userIsJoined",(data)=>{
       if(data.success){
         console.log("userJoined")
+        setUsers(data.users);
       }else{
         console.log("userJoined error")
       }
+    })
+
+    socket.on("allUsers",data=>{
+      setUsers(data);
     })
   },[])
   
@@ -71,7 +78,7 @@ const App=() => {
   <Router>
 <Routes>
 <Route  path="/" element={<Forms uuid={uuid} socket={socket} setUser={setUser}/>}/>
-<Route  path="/:roomId" element={<Room user={user} socket={socket}/>}/>
+<Route  path="/:roomId" element={<Room user={user} socket={socket} users={users}/>}/>
 </Routes>
 </Router>
 
