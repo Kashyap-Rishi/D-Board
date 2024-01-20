@@ -1,15 +1,15 @@
-// import React, { useEffect, useState, useRef } from 'react';
-// import io from 'socket.io-client';
+
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import './whiteboard.css'
 import rough from 'roughjs'
+import { Socket } from 'socket.io-client';
 
 
 const roughGenerator=rough.generator();
-// const socket = io('http://localhost:8000');
+
 
 interface Element {
-  // Define the actual structure of elements here
+
   type: string;
   offsetX: number;
   offsetY: number;
@@ -31,12 +31,20 @@ interface WhiteBoardProps {
   setElements: React.Dispatch<React.SetStateAction<Element[]>>;
   tool:string;
   color:string;
-
+  user:  { name: string; roomId: string; userid: string; host: boolean; presenter: boolean }
+  socket:Socket
 }
 
-const WhiteBoard: React.FC<WhiteBoardProps> = ({ canvasRef, ctxRef, elements, setElements,tool, color }) => {
+const WhiteBoard: React.FC<WhiteBoardProps> = ({ canvasRef, ctxRef, elements, setElements,tool, color, user,socket }) => {
 
   const [isDrawing, setIsDrawing]=useState(false);
+  const [img, setImg]=useState('');
+
+  useEffect(()=>{
+    socket.on("whiteBoardDataResponse", (data)=>{
+         setImg(data.imgURL);
+    })
+  },[])
 
 useEffect(()=>{
         
@@ -58,6 +66,8 @@ if(ctx){
   }
 
 },[])
+
+
 
 useEffect(()=>{
   if(ctxRef.current)
@@ -108,6 +118,11 @@ roughCanvas.draw(
         );
       }
     });
+
+    if(canvasRef.current){
+    const canvasImage=canvasRef.current.toDataURL()
+    socket.emit("whiteboardData",canvasImage);
+    }
   }
 }, [elements, canvasRef]);
 
@@ -220,6 +235,15 @@ const handleMouseMove = (e: React.MouseEvent) => {
 
  const handleMouseUp=()=>{
     setIsDrawing(false);
+ }
+
+ if(!user?.presenter){
+   return(
+    <div className="main-can"
+>
+<img src={img} alt="Real time whiteboard image shared by presenter" className="rt-img"/>
+    </div>
+   )
  }
 
   return(
