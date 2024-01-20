@@ -21,15 +21,25 @@ app.get("/", (req, res) => {
   res.send("server");
 });
 
-// socket.io
+let roomIdGlobal, imgURLGlobal
 
 io.on('connection',(socket)=>{
   socket.on("userJoined", (data)=>{
     const {name, userId, roomId, host, presenter} = data;
+    roomIdGlobal=roomId
     socket.join(roomId);
     socket.emit("userIsJoined", {success:true});
+    socket.broadcast.to(roomId).emit("whiteBoardDataResponse",{
+       imgURL:imgURLGlobal
+    })
   })
-  
+
+  socket.on("whiteboardData",(data)=>{
+     imgURLGlobal = data;
+     socket.broadcast.to(roomIdGlobal).emit("whiteBoardDataResponse",{
+      imgURL:data,
+   })
+  }); 
 })
 
 
@@ -37,7 +47,7 @@ io.on('connection',(socket)=>{
 const PORT = process.env.PORT || 8000;
 
 server.listen(PORT, () =>
-  console.log(`server is listening on http://localhost:${PORT}`)
+  console.log(`server is listening on port:${PORT}`)
 );
 
 

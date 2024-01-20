@@ -23,7 +23,7 @@ const handleRoomJoin=(e:React.FormEvent)=>{
     roomId,
     userid:uuid(),
     host:true,
-    presenter:true
+    presenter:false
    };
    setUser(roomData);
    navigate(`/${roomId}`)

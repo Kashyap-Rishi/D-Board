@@ -5,3 +5,7 @@
     border: 1px solid black;
     overflow: hidden;
 }
+.rt-img{
+    width:100%;
+    height:100%;
+}
