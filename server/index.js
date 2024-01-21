@@ -25,17 +25,17 @@ app.get("/", (req, res) => {
 let roomIdGlobal, imgURLGlobal
 
 io.on('connection',(socket)=>{
-  socket.on("userJoined", (data)=>{
-    const {name, userId, roomId, host, presenter} = data;
-    roomIdGlobal=roomId
+  socket.on("userJoined", (data) => {
+    const { name, userId, roomId, host, presenter } = data;
+    roomIdGlobal = roomId;
     socket.join(roomId);
-    const users = addUser(data);
-    socket.emit("userIsJoined", {success:true, users});
+    const users = addUser({ name, userId, roomId, host, presenter });
+    socket.emit("userIsJoined", { success: true, users });
     socket.broadcast.to(roomId).emit("allUsers", users);
-    socket.broadcast.to(roomId).emit("whiteBoardDataResponse",{
-       imgURL:imgURLGlobal
-    })
-  })
+    socket.broadcast.to(roomId).emit("whiteBoardDataResponse", {
+      imgURL: imgURLGlobal,
+    });
+  });
 
   socket.on("whiteboardData",(data)=>{
      imgURLGlobal = data;

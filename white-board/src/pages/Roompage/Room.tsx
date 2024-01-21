@@ -5,14 +5,14 @@ import { Socket } from 'socket.io-client';
 
 interface JoinedUsers{
   name: string
+  userId: string
   roomId: string
-  userid: string
   host: boolean
   presenter: boolean
 }
 
 interface Props{
-  user:  { name: string; roomId: string; userid: string; host: boolean; presenter: boolean }
+  user:  { name: string; userId: string; roomId: string; host: boolean; presenter: boolean }
   socket:Socket
   users:JoinedUsers[]
   
@@ -37,6 +37,7 @@ const [tool,setTool]=useState("pencil");
 const [color,setColor]=useState("black");
 const [elements, setElements] = useState<Element[]>([]);
 const [history, setHistory] = useState<Element[][]>([]);
+const [openedUserTab, setOpenedUserTab]=useState(false);
 
 const handleClearCanvas=()=>{
   const canvas=canvasRef.current;
@@ -76,6 +77,30 @@ const redoOperation = () => {
 
   return (
     <div>
+      <button type="button"
+      onClick={()=>setOpenedUserTab(true)}>
+        Users
+      </button>
+      {
+        openedUserTab && (
+          <div
+          className="side-box"
+          style={{width:"250px", left: "0%"}}>
+            <button type="button" onClick={()=>setOpenedUserTab(false)}>
+              Close
+            </button>
+            <div className="user-display">
+            {users.map((usr, index) => (
+  <p key={index} className="side-box-users">
+    {usr.name}
+    { user.userId === usr.userId && " (You)"}
+  </p>
+))}
+
+            </div>
+          </div>
+        )
+      }
          <h1>Whiteboard sharing app
           <span>[User online : {users.length}]</span>
          </h1>

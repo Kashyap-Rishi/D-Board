@@ -31,7 +31,7 @@ interface WhiteBoardProps {
   setElements: React.Dispatch<React.SetStateAction<Element[]>>;
   tool:string;
   color:string;
-  user:  { name: string; roomId: string; userid: string; host: boolean; presenter: boolean }
+  user:  { name: string; userId: string;roomId: string;  host: boolean; presenter: boolean }
   socket:Socket
 }
 

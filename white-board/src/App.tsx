@@ -10,6 +10,13 @@ import { useEffect, useState } from 'react';
 
 const server = "http://localhost:8000";
 
+interface JoinedUsers {
+  name: string;
+  userId: string;
+  roomId: string;
+  host: boolean;
+  presenter: boolean;
+}
 const connectionOptions: {
   forceNew?: boolean;
   reconnectionAttempts: number;
@@ -28,13 +35,13 @@ const App=() => {
   
   const [user, setUser] = useState({
     name: '',
+    userId: '',
     roomId: '',
-    userid: '',
     host: false,
     presenter: false,
   });
 
-  const [users,setUsers]=useState([]);
+  const [users, setUsers] = useState<JoinedUsers[]>([]);
 
   useEffect(()=>{
     socket.on("userIsJoined",(data)=>{
@@ -47,6 +54,8 @@ const App=() => {
     })
 
     socket.on("allUsers",data=>{
+    
+
       setUsers(data);
     })
   },[])
