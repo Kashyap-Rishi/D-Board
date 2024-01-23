@@ -1,5 +1,6 @@
 .canvas-box{
     height:500px;
+
     margin:100px;
     
 }
@@ -11,3 +12,21 @@
 .tool-options{
     display: flex;
 }
+.side-box{
+    position: fixed;
+    top:0;
+    height:100vh;
+color:white;
+background-color: rgb(74, 72, 72);
+padding: 20px;
+
+}
+
+.side-box-users{
+    text-align: center;
+display: block;
+    color:white;
+    background-color: brown;
+  
+}
+

@@ -3,13 +3,20 @@ import './App.css'
 import { Socket } from 'socket.io-client';
 import { io } from 'socket.io-client'
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
-
+import { toast, ToastContainer } from 'react-toastify';
 import Room from './pages/Roompage/Room'
 import Forms from './components/Forms/Forms'
 import { useEffect, useState } from 'react';
 
 const server = "http://localhost:8000";
 
+interface JoinedUsers {
+  name: string;
+  userId: string;
+  roomId: string;
+  host: boolean;
+  presenter: boolean;
+}
 const connectionOptions: {
   forceNew?: boolean;
   reconnectionAttempts: number;
@@ -28,20 +35,42 @@ const App=() => {
   
   const [user, setUser] = useState({
     name: '',
+    userId: '',
     roomId: '',
-    userid: '',
     host: false,
     presenter: false,
   });
+
+  const [users, setUsers] = useState<JoinedUsers[]>([]);
 
   useEffect(()=>{
     socket.on("userIsJoined",(data)=>{
       if(data.success){
         console.log("userJoined")
+        setUsers(data.users);
       }else{
         console.log("userJoined error")
       }
     })
+
+    socket.on("allUsers",data=>{
+      setUsers(data);
+    })
+
+    socket.on("userJoinedMessageBroadCasted",(data)=>{
+      toast.info(`${data} joined the room`);
+    })
+
+    socket.on("userLeftMessageBroadCasted",(data)=>{
+     toast.info(`${data} left the room`);
+    })
+    return () => {
+      socket.off("userIsJoined");
+      socket.off("allUsers");
+      socket.off("userJoinedMessageBroadCasted");
+      socket.off("userLeftMessageBroadCasted");
+    };
+  
   },[])
   
 
@@ -68,10 +97,11 @@ const App=() => {
 
   return (
 <div>
+  <ToastContainer/>
   <Router>
 <Routes>
 <Route  path="/" element={<Forms uuid={uuid} socket={socket} setUser={setUser}/>}/>
-<Route  path="/:roomId" element={<Room user={user} socket={socket}/>}/>
+<Route  path="/:roomId" element={<Room user={user} socket={socket} users={users}/>}/>
 </Routes>
 </Router>
 

@@ -31,7 +31,7 @@ interface WhiteBoardProps {
   setElements: React.Dispatch<React.SetStateAction<Element[]>>;
   tool:string;
   color:string;
-  user:  { name: string; roomId: string; userid: string; host: boolean; presenter: boolean }
+  user:  { name: string; userId: string;roomId: string;  host: boolean; presenter: boolean }
   socket:Socket
 }
 
@@ -52,8 +52,8 @@ useEffect(()=>{
   
 
   if(canvas){
-    canvas.height=window.innerHeight*2;
-    canvas.width=window.innerWidth*2;
+    canvas.height=window.innerHeight;
+    canvas.width=window.innerWidth;
   const ctx=canvas.getContext("2d")
 if(ctx){
   ctx.strokeStyle=color;
@@ -241,7 +241,7 @@ const handleMouseMove = (e: React.MouseEvent) => {
    return(
     <div className="main-can"
 >
-<img src={img} alt="Real time whiteboard image shared by presenter" className="rt-img"/>
+<img src={img} alt="Real time whiteboard image shared by presenter" />
     </div>
    )
  }
