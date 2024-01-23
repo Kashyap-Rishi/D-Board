@@ -3,7 +3,7 @@ import './App.css'
 import { Socket } from 'socket.io-client';
 import { io } from 'socket.io-client'
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
-
+import { toast, ToastContainer } from 'react-toastify';
 import Room from './pages/Roompage/Room'
 import Forms from './components/Forms/Forms'
 import { useEffect, useState } from 'react';
@@ -54,10 +54,23 @@ const App=() => {
     })
 
     socket.on("allUsers",data=>{
-    
-
       setUsers(data);
     })
+
+    socket.on("userJoinedMessageBroadCasted",(data)=>{
+      toast.info(`${data} joined the room`);
+    })
+
+    socket.on("userLeftMessageBroadCasted",(data)=>{
+     toast.info(`${data} left the room`);
+    })
+    return () => {
+      socket.off("userIsJoined");
+      socket.off("allUsers");
+      socket.off("userJoinedMessageBroadCasted");
+      socket.off("userLeftMessageBroadCasted");
+    };
+  
   },[])
   
 
@@ -84,6 +97,7 @@ const App=() => {
 
   return (
 <div>
+  <ToastContainer/>
   <Router>
 <Routes>
 <Route  path="/" element={<Forms uuid={uuid} socket={socket} setUser={setUser}/>}/>

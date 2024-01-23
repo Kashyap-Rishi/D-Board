@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import WhiteBoard from "../../components/Whiteboard/WhiteBoard";
 import './room.css'
 import { Socket } from 'socket.io-client';
@@ -38,6 +38,12 @@ const [color,setColor]=useState("black");
 const [elements, setElements] = useState<Element[]>([]);
 const [history, setHistory] = useState<Element[][]>([]);
 const [openedUserTab, setOpenedUserTab]=useState(false);
+
+useEffect(()=>{
+   return ()=>{
+    socket.emit("userLeft",user)
+   }
+},[])
 
 const handleClearCanvas=()=>{
   const canvas=canvasRef.current;
