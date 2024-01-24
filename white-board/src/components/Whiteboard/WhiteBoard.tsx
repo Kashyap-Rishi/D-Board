@@ -116,6 +116,21 @@ roughCanvas.draw(
           roughness:0
         })
         );
+      }else if(element.type=="ellipse"){
+        roughCanvas.draw(
+          roughGenerator.ellipse(
+            element.offsetX + element.width / 2,
+            element.offsetY + element.height / 2,
+            element.width,
+            element.height,
+            {
+              stroke:element.stroke,
+              strokeWidth:5,
+              roughness:0
+            }
+          )
+
+        )
       }
     });
 
@@ -173,6 +188,19 @@ const handleMouseDown=(e:React.MouseEvent)=>{
       },
      ])
   }
+  else if (tool === "ellipse") {
+    setElements((prevElements) => [
+      ...prevElements,
+      {
+        type: "ellipse",
+        offsetX,
+        offsetY,
+        width: 0,
+        height: 0,
+        stroke: color,
+      },
+    ]);
+  }
     setIsDrawing(true);
 }
 
@@ -228,7 +256,23 @@ const handleMouseMove = (e: React.MouseEvent) => {
         }
       })
     );
+    }else if (tool === "ellipse") {
+      setElements((prevElements) =>
+        prevElements.map((ele, index) => {
+          if (index === elements.length - 1) {
+            return {
+              ...ele,
+              width: offsetX - ele.offsetX,
+              height: offsetY - ele.offsetY,
+            };
+          } else {
+            return ele;
+          }
+        })
+      );
     }
+  
+
  
   }
 };
