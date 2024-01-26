@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react"
 import WhiteBoard from "../../components/Whiteboard/WhiteBoard";
 import './room.css'
+import html2pdf from 'html2pdf.js'
+
+
 import { Socket } from 'socket.io-client';
 
 interface JoinedUsers{
@@ -38,6 +41,11 @@ const [color,setColor]=useState("black");
 const [elements, setElements] = useState<Element[]>([]);
 const [history, setHistory] = useState<Element[][]>([]);
 const [openedUserTab, setOpenedUserTab]=useState(false);
+
+
+
+
+
 
 useEffect(()=>{
    return ()=>{
@@ -80,6 +88,21 @@ const redoOperation = () => {
 
   setHistory((prevHistory) => prevHistory.slice(0, prevHistory.length - 1));
 };
+
+const handleDownload = () => {
+  const whiteboardContainer = document.querySelector('.canvas-box');
+
+  if (whiteboardContainer) {
+    html2pdf(whiteboardContainer, {
+      margin: 0,
+      filename: 'whiteboard.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
+    });
+  }
+};
+
 
   return (
     <div>
@@ -141,6 +164,16 @@ const redoOperation = () => {
                 checked={tool=== "rect"}
                 onChange={(e)=>setTool(e.target.value)}/>
               </div>
+              <div>
+                  <label htmlFor="Ellipse">Ellipse</label>
+              <input
+                type="radio"
+                name="tool"
+                value="ellipse"
+                checked={tool=== "ellipse"}
+                onChange={(e)=>setTool(e.target.value)}/>
+              </div>
+
           </div>
           <div>
               <div>
@@ -153,7 +186,19 @@ const redoOperation = () => {
               </div>
               
           </div>
+          <div>
+    <label htmlFor="text">Text</label>
+    <input
+      type="radio"
+      name="tool"
+      value="text"
+      checked={tool === "text"}
+      onChange={(e) => setTool(e.target.value)}
+    />
+  </div>
           <div >
+            
+
 <button
 disabled={elements.length===0}
 onClick={()=> undoOperation()}
@@ -174,6 +219,7 @@ onClick={()=> redoOperation()}
         
 
           <div className="canvas-box">
+
             <WhiteBoard canvasRef={canvasRef} ctxRef={ctxRef}
             elements={elements}
             setElements={setElements}
@@ -182,6 +228,10 @@ onClick={()=> redoOperation()}
           user={user}
           socket={socket}
             />
+          </div>
+
+          <div className="dnld-btn">
+            <button onClick={handleDownload}>Download</button>
           </div>
 
     </div>
