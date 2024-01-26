@@ -45,10 +45,23 @@ io.on('connection',(socket)=>{
    })
   }); 
 
+  socket.on("message",(data)=>{
+    const {message}=data;
+    const user=getUser(socket.id)
+   
+    if(user){ 
+      removeUser(socket.id);
+      socket.broadcast;
+    
+    socket.broadcast.to(roomIdGlobal).emit("messageResponse",{message,name:user.name})
+    }
+  })
+
   socket.on("disconnect",()=>{
     const user=getUser(socket.id)
-    removeUser(socket.id)
     if(user){
+    removeUser(socket.id)
+   
     
     socket.broadcast.to(roomIdGlobal).emit("userLeftMessageBroadCasted", user.name)
     }
