@@ -2,7 +2,7 @@ const Connection =require('./db.js');
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const mongoose=require('mongoose');
+
 const server = require("http").createServer(app);
 const {Server} = require("socket.io");
 const { addUser, getUser, removeUser } = require("./utils/users");
