@@ -1,15 +1,15 @@
 const Connection =require('./db.js');
 const express = require("express");
+const mongoose=require("mongoose");
 const app = express();
 const cors = require("cors");
-
 const server = require("http").createServer(app);
 const {Server} = require("socket.io");
 const { addUser, getUser, removeUser } = require("./utils/users");
 
 const io =new Server(server);
 require('dotenv').config();
-
+app.use(express.json()); 
 app.use(cors());
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -21,11 +21,63 @@ app.use((req, res, next) => {
 });
 
 Connection(process.env.MONGO_USERNAME,process.env.MONGO_PASSWORD)
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String
+})
 
+const User = new mongoose.model("User", userSchema)
 
-app.get("/", (req, res) => {
-  res.send("server");
+//Routes
+app.post("/login", (req, res)=> {
+  const { email, password} = req.body
+  User.findOne({ email: email}, (err, user) => {
+      if(user){
+          if(password === user.password ) {
+              res.send({message: "Login Successfull", user: user})
+          } else {
+              res.send({ message: "Password didn't match"})
+          }
+      } else {
+          res.send({message: "User not registered"})
+      }
+  })
+}) 
+
+app.post("/register", (req, res) => {
+  const { name, email, password } = req.body;
+
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: "Incomplete data. Please provide name, email, and password." });
+  }
+
+  User.findOne({ email: email })
+    .then(user => {
+      if (user) {
+        return res.status(409).json({ message: "User already registered" });
+      } else {
+        const newUser = new User({
+          name,
+          email,
+          password,
+        });
+
+        return newUser.save();
+      }
+    })
+    .then(() => {
+      return res.status(201).json({ message: "Successfully Registered, Please login now." });
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ message: "Internal Server Error" });
+    });
 });
+
+
+
+
 
 let roomIdGlobal, imgURLGlobal
 

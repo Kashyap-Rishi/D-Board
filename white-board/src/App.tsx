@@ -6,6 +6,9 @@ import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 import { toast, ToastContainer } from 'react-toastify';
 import Room from './pages/Roompage/Room'
 import Forms from './components/Forms/Forms'
+import Login from './components/Login/Login';
+import Signup from './components/Signup/Signup';
+import Home from './pages/Homepage/Home';
 import { useEffect, useState } from 'react';
 
 const server = "http://localhost:8000";
@@ -32,7 +35,8 @@ const connectionOptions: {
 const socket : Socket = io(server, connectionOptions);
 
 const App=() => {
-  
+  const [ loginUser, setLoginUser] = useState({})
+
   const [user, setUser] = useState({
     name: '',
     userId: '',
@@ -100,8 +104,15 @@ const App=() => {
   <ToastContainer/>
   <Router>
 <Routes>
-<Route  path="/" element={<Forms uuid={uuid} socket={socket} setUser={setUser}/>}/>
+  <Route path="/" element={<Home/>}/>
+<Route  path="/rooms-join-create" element={<Forms uuid={uuid} socket={socket} setUser={setUser}/>}/>
 <Route  path="/:roomId" element={<Room user={user} socket={socket} users={users}/>}/>
+<Route path="/login" element={  <Login setLoginUser={setLoginUser}/>}/>
+          
+          
+          <Route path="/signup" element={<Signup/>}/>
+          
+         
 </Routes>
 </Router>
 
