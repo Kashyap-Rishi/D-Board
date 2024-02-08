@@ -1,3 +1,4 @@
+const Connection =require('./db.js');
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -7,6 +8,7 @@ const {Server} = require("socket.io");
 const { addUser, getUser, removeUser } = require("./utils/users");
 
 const io =new Server(server);
+require('dotenv').config();
 
 app.use(cors());
 app.use((req, res, next) => {
@@ -17,6 +19,9 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+Connection(process.env.MONGO_USERNAME,process.env.MONGO_PASSWORD)
+
 
 app.get("/", (req, res) => {
   res.send("server");
@@ -45,10 +50,22 @@ io.on('connection',(socket)=>{
    })
   }); 
 
+  socket.on("message",(data)=>{
+    const {message}=data;
+    const user=getUser(socket.id)
+   
+    if(user){ 
+
+    
+    socket.broadcast.to(roomIdGlobal).emit("messageResponse",{message,name:user.name})
+    }
+  })
+
   socket.on("disconnect",()=>{
     const user=getUser(socket.id)
-    removeUser(socket.id)
     if(user){
+    removeUser(socket.id)
+   
     
     socket.broadcast.to(roomIdGlobal).emit("userLeftMessageBroadCasted", user.name)
     }

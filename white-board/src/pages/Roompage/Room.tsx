@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import WhiteBoard from "../../components/Whiteboard/WhiteBoard";
+import ChatRoom from "../../components/ChatRoom/ChatRoom";
+
 import './room.css'
 import html2pdf from 'html2pdf.js'
 
@@ -41,6 +43,7 @@ const [color,setColor]=useState("black");
 const [elements, setElements] = useState<Element[]>([]);
 const [history, setHistory] = useState<Element[][]>([]);
 const [openedUserTab, setOpenedUserTab]=useState(false);
+const [openedChatTab, setOpenedChatTab]=useState(false);
 
 
 
@@ -110,24 +113,34 @@ const handleDownload = () => {
       onClick={()=>setOpenedUserTab(true)}>
         Users
       </button>
+ 
       {
-        openedUserTab && (
+       openedUserTab && (
           <div
           className="side-box"
           style={{width:"250px", left: "0%"}}>
             <button type="button" onClick={()=>setOpenedUserTab(false)}>
               Close
             </button>
+       
             <div className="user-display">
             {users.map((usr, index) => (
   <p key={index} className="side-box-users">
     {usr.name}
     { user.userId === usr.userId && " (You)"}
-  </p>
+   </p>
 ))}
 
             </div>
           </div>
+        )
+      }
+          <button type="button" onClick={()=>setOpenedChatTab(true)}>
+              Chat
+            </button>
+          {
+       openedChatTab && (
+<ChatRoom setOpenedChatTab={setOpenedChatTab} socket={socket}/>
         )
       }
          <h1>Whiteboard sharing app
