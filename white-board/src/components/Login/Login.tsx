@@ -30,7 +30,7 @@ const Login: React.FC<LoginProps> = ({ setLoginUser }) => {
         .then(res => {
             alert(res.data.message)
             setLoginUser(res.data.user)
-            navigate("/")
+            navigate("/rooms-join-create")
         })
     }
 

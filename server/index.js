@@ -30,20 +30,26 @@ const userSchema = new mongoose.Schema({
 const User = new mongoose.model("User", userSchema)
 
 //Routes
-app.post("/login", (req, res)=> {
-  const { email, password} = req.body
-  User.findOne({ email: email}, (err, user) => {
-      if(user){
-          if(password === user.password ) {
-              res.send({message: "Login Successfull", user: user})
-          } else {
-              res.send({ message: "Password didn't match"})
-          }
+app.post("/login", (req, res) => {
+  const { email, password } = req.body;
+
+  User.findOne({ email: email })
+    .then(user => {
+      if (user) {
+        if (password === user.password) {
+          res.status(200).json({ message: "Login Successful", user: user });
+        } else {
+          res.status(401).json({ message: "Password didn't match" });
+        }
       } else {
-          res.send({message: "User not registered"})
+        res.status(404).json({ message: "User not registered" });
       }
-  })
-}) 
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: "Internal Server Error" });
+    });
+});
 
 app.post("/register", (req, res) => {
   const { name, email, password } = req.body;
