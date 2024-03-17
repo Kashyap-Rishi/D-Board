@@ -1,58 +1,46 @@
-import React, { useState } from "react"
-import "./signup.css"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
-type Values = {
-    name : string,
-    email : string,
-    password : string,
-    reEnterPassword : string,
+// components/Signup.tsx
+import React, { useState } from 'react';
+
+interface SignupProps {
+  onSignup: (name: string, email: string, password: string) => void; // Update the type
 }
 
-const Signup= () => {
+const Signup: React.FC<SignupProps> = ({ onSignup }) => {
+  const [name, setName] = useState(''); // Change to name
+  const [email, setEmail] = useState(''); // Add email state
+  const [password, setPassword] = useState('');
 
-    const navigate = useNavigate()
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSignup(name, email, password); // Pass name, email, and password
+  };
 
-    const [values,setValues] = useState<Values>({
-        name : "",
-        email : "",
-        password: "",
-        reEnterPassword: ""
-    });
+  return (
+    <div>
+      <h2>Signup</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)} // Change to setName
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)} // Add setEmail
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Signup</button>
+      </form>
+    </div>
+  );
+};
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValues({...values,[event.target.name] : event.target.value});
-    }
-
-    const register = () => {
-        const { name, email, password, reEnterPassword } = values
-        if( name && email && password && (password === reEnterPassword)){
-            axios.post("http://localhost:8000/register", values)
-            .then( res => {
-                alert(res.data.message)
-                navigate("/login")
-            })
-        } else {
-            alert("invlid input")
-        }
-        
-    }
-
-    return (
-        
-        <div className="register">
-          
-            <h1>Register</h1>
-            <input type="text" name="name" value={values.name} placeholder="Your Name" onChange={ handleChange }></input>
-            <input type="text" name="email" value={values.email} placeholder="Your Email" onChange={ handleChange }></input>
-            <input type="password" name="password" value={values.password} placeholder="Your Password" onChange={ handleChange }></input>
-            <input type="password" name="reEnterPassword" value={values.reEnterPassword} placeholder="Re-enter Password" onChange={ handleChange }></input>
-            <div className="button" onClick={register} >Register</div>
-            <div>or</div>
-            <div className="button" onClick={() => navigate("/login")}>Login</div>
-        </div>
-
-    )
-}
-
-export default Signup
+export default Signup;

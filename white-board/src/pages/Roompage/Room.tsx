@@ -3,7 +3,7 @@ import WhiteBoard from "../../components/Whiteboard/WhiteBoard";
 import ChatRoom from "../../components/ChatRoom/ChatRoom";
 
 import './room.css'
-import html2pdf from 'html2pdf.js'
+
 
 
 import { Socket } from 'socket.io-client';
@@ -92,19 +92,19 @@ const redoOperation = () => {
   setHistory((prevHistory) => prevHistory.slice(0, prevHistory.length - 1));
 };
 
-const handleDownload = () => {
-  const whiteboardContainer = document.querySelector('.canvas-box');
+// const handleDownload = () => {
+//   const whiteboardContainer = document.querySelector('.canvas-box');
 
-  if (whiteboardContainer) {
-    html2pdf(whiteboardContainer, {
-      margin: 0,
-      filename: 'whiteboard.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
-    });
-  }
-};
+//   if (whiteboardContainer) {
+//     html2pdf(whiteboardContainer, {
+//       margin: 0,
+//       filename: 'whiteboard.pdf',
+//       image: { type: 'jpeg', quality: 0.98 },
+//       html2canvas: { scale: 2 },
+//       jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
+//     });
+//   }
+// };
 
 
   return (
@@ -243,9 +243,9 @@ onClick={()=> redoOperation()}
             />
           </div>
 
-          <div className="dnld-btn">
+          {/* <div className="dnld-btn">
             <button onClick={handleDownload}>Download</button>
-          </div>
+          </div> */}
 
     </div>
   )

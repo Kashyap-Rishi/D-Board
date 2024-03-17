@@ -1,49 +1,51 @@
-import  React, {useState} from "react"
-import "./login.css"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginProps {
-    setLoginUser: (user: { email: string; password: string }) => void;
+  onLogin: (email: string, password: string) => Promise<{ token: string }>; // Updated onLogin function to return token
 }
 
+const Login: React.FC<LoginProps> = ({ onLogin }) => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-const Login: React.FC<LoginProps> = ({ setLoginUser }) => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onLogin(email, password)
+      .then(({ token }) => {
+        localStorage.setItem('token', token); // Store token in localStorage
+        navigate('/rooms-join'); // Redirect to '/rooms-join' upon successful login
+      })
+      .catch((error) => {
+        console.error('Login failed:', error);
+        // Set error message received from the server
+        setErrorMessage(error.message);
+      });
+  };
 
-    const navigate = useNavigate()
+  return (
+    <div>
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Login</button>
+      </form>
+      {errorMessage && <p>{errorMessage}</p>}
+    </div>
+  );
+};
 
-    const [ user, setUser] = useState({
-        email:"",
-        password:""
-    })
-
-    const handleChange = (e:React.FormEvent) => {
-        const { name, value } = e.target as HTMLInputElement;
-        setUser({
-            ...user,
-            [name]: value
-        })
-    }
-
-    const login = () => {
-        axios.post("http://localhost:8000/login", user)
-        .then(res => {
-            alert(res.data.message)
-            setLoginUser(res.data.user)
-            navigate("/rooms-join-create")
-        })
-    }
-
-    return (
-        <div className="login">
-            <h1>Login</h1>
-            <input type="text" name="email" value={user.email} onChange={handleChange} placeholder="Enter your Email"></input>
-            <input type="password" name="password" value={user.password} onChange={handleChange}  placeholder="Enter your Password" ></input>
-            <div className="button" onClick={login}>Login</div>
-            <div>or</div>
-            <div className="button" onClick={() => navigate("/register")}>Register</div>
-        </div>
-    )
-}
-
-export default Login
+export default Login;
