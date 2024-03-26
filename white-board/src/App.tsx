@@ -100,8 +100,9 @@ const App=() => {
         return response.json();
       })
       .then((data) => {
-        console.log(data); // Handle signup response
-        // Redirect to login page upon successful signup
+        console.log(data); 
+        
+ 
         window.location.href = '/login';
       })
       .catch((error) => {

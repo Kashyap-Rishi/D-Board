@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import WhiteBoard from "../../components/Whiteboard/WhiteBoard";
 import ChatRoom from "../../components/ChatRoom/ChatRoom";
+import jsPDF from 'jspdf';
 
 import './room.css'
 
@@ -54,13 +55,6 @@ const Room = ({ user, socket, users, setUsers }: Props) => {
   const [openedChatTab, setOpenedChatTab] = useState(false);
 
   useEffect(() => {
-    
-      socket.emit("leaveRoom", user);
-      const updatedUsers = users.filter((u) => u.userId !== user.userId);
-      setUsers(updatedUsers);
-    
-  }, []);
-  useEffect(() => {
     socket.on("allUsers", (updatedUsers) => {
       setUsers(updatedUsers);
     });
@@ -107,30 +101,43 @@ const Room = ({ user, socket, users, setUsers }: Props) => {
     window.history.back(); 
   };
 
-// const handleDownload = () => {
-//   const whiteboardContainer = document.querySelector('.canvas-box');
-
-//   if (whiteboardContainer) {
-//     html2pdf(whiteboardContainer, {
-//       margin: 0,
-//       filename: 'whiteboard.pdf',
-//       image: { type: 'jpeg', quality: 0.98 },
-//       html2canvas: { scale: 2 },
-//       jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
-//     });
-//   }
-// };
+  const downloadCanvasAsPDF = () => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      // Create an instance of jsPDF in landscape orientation ('l'), units in pixels ('px'), and format
+      const pdf = new jsPDF({
+        orientation: 'l',
+        unit: 'px',
+        format: [canvas.width, canvas.height]
+      });
+      
+      // Convert the canvas to a data URL
+      const canvasImage = canvas.toDataURL('image/png');
+      
+      // Add the image to the PDF. Parameters are image URL, format, x, y, width, height
+      pdf.addImage(canvasImage, 'PNG', 0, 0, canvas.width, canvas.height);
+      
+      // Save the created PDF
+      pdf.save('canvas-drawing.pdf');
+    }
+  };
+  
 
 
   return (
     <div>
        <Navbar/>
 <div className="heading-room">
-<div className="leave-room-button">
-        <button className="leave-room-button" onClick={leaveRoom}>Leave Room</button>
-      </div>
-      <div className="user-chat-room">
-      <button type="button"
+
+      <div className="main-head-room">
+         <h1>
+          <span>[Users online : {users.length}]</span>
+         </h1>
+         </div>
+         <div className="btn-features">
+   
+      <div className="user-chat-room-btn">
+      <button className="button-17" type="button"
       onClick={()=>setOpenedUserTab(true)}>
         Users
       </button>
@@ -158,7 +165,7 @@ const Room = ({ user, socket, users, setUsers }: Props) => {
         )
       }
       
-          <button type="button" onClick={()=>setOpenedChatTab(true)}>
+          <button className="button-17" type="button" onClick={()=>setOpenedChatTab(true)}>
               Chat
             </button>
           {
@@ -169,11 +176,14 @@ const Room = ({ user, socket, users, setUsers }: Props) => {
         
       }
       </div>
-      <div className="main-head-room">
-         <h1>Imagine, Sketch, Create
-          <span>[Users online : {users.length}]</span>
-         </h1>
+      <div className="leave-room-btn">
+         <button className="button-17" onClick={leaveRoom}>Leave Room</button>
          </div>
+         <div className="dnld-btn">
+         <button className="button-17" onClick={downloadCanvasAsPDF}>Download</button>
+         </div>
+
+      </div>
          </div>
 
 
@@ -273,9 +283,6 @@ const Room = ({ user, socket, users, setUsers }: Props) => {
             />
           </div>
 
-          {/* <div className="dnld-btn">
-            <button onClick={handleDownload}>Download</button>
-          </div> */}
 <Footer/>
     </div>
   )

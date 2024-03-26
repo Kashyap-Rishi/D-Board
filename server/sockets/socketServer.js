@@ -29,20 +29,17 @@ module.exports = (io) => {
             }
         });
         socket.on("leaveRoom", (data) => {
-            const { userId } = data;
-            const user = removeUser(userId);
-            if (user) {
-          
-              const userSocket = io.sockets.sockets.get(userId);
-              if (userSocket) {
-                userSocket.disconnect(true);
-              }
-
-              socket.leave(user.roomId);
-              io.to(user.roomId).emit("userLeftMessageBroadCasted", `${user.name} has left the room.`);
-              io.to(user.roomId).emit("allUsers", getUsersInRoom(user.roomId));
+            
+            const user = getUser(socket.id);
+            
+                if (user) {
+                    removeUser(socket.id);
+                    socket.broadcast.to(roomIdGlobal).emit("userLeftMessageBroadCasted", user.name);
+                    socket.broadcast.to(roomIdGlobal).emit("allUsers", getUsersInRoom(roomIdGlobal)); // Emit updated users list
+                
             }
-          });
+        });
+        
 
         socket.on("disconnect", () => {
             const user = getUser(socket.id);
