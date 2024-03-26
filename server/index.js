@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const http = require("http");
+const userDataRoutes = require("./routes/data/userData");
 const { Server } = require("socket.io");
 const connectToDatabase = require("./db/db");
 const authRoutes = require("./routes/auth/auth");
@@ -19,9 +20,9 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 app.use("/auth", authRoutes);
+app.use("/users", userDataRoutes);
 
 app.post("/verifyToken", verifyToken, (req, res) => {
-    // If the token verification middleware passes, then the token is valid
     res.status(200).json({ message: "Token is valid" });
 });
 

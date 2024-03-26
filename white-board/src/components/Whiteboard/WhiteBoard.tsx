@@ -283,7 +283,7 @@ const handleMouseMove = (e: React.MouseEvent) => {
 
  if(!user?.presenter){
    return(
-    <div className="main-can"
+    <div className="main-can1"
 >
 <img src={img} alt="Real time whiteboard image shared by presenter" />
     </div>
@@ -292,7 +292,7 @@ const handleMouseMove = (e: React.MouseEvent) => {
 
   return(
   
-  <div className="main-can"
+  <div className="main-can1"
   onMouseDown={handleMouseDown}
   onMouseMove={handleMouseMove}
   onMouseUp={handleMouseUp}>

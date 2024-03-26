@@ -1,32 +1,119 @@
-.canvas-box{
+.canvas-box1{
     height:500px;
 
-    margin:100px 100px 50px;
+margin: 100px 0px;
+
     
 }
-
-.board-elements{
+.heading-room{
     display: flex;
+    align-items: center;
+    text-align: center;
+}
 
-}
-.tool-options{
+.board-elements {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
-}
-.side-box{
+  }
+  
+  .tool-options {
+margin: 0 10px;
+    display: flex;
+  }
+  
+  .tool-option {
+    display: flex;
+    align-items: center;
+    padding: 0 7%;
+    
+  }
+  
+  .tool-label {
+    margin-left: 10px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .color-picker {
+    margin: 0 200px;
+  }
+  
+
+  
+
+  
+  .undo-button,
+  .redo-button {
+    background-color: #808280;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+    cursor: pointer; /* Ensuring default cursor for enabled buttons */
+  }
+  
+  .undo-button:hover,
+  .redo-button:hover {
+    background-color: #494b4a;
+  }
+  
+  /* Style for disabled buttons */
+  .undo-button:disabled,
+  .redo-button:disabled {
+    background-color: #ccc; /* Lighter background color for disabled buttons */
+    cursor: not-allowed; /* Changing cursor to indicate disabled state */
+  }
+  
+  
+  .clear-canvas-button {
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .clear-canvas-button:hover {
+    background-color: #d32f2f;
+  }
+  
+  
+ .user-display1{
+  padding-top: 20px;
+ }
+  
+.side-box1{
+    z-index: 9999;
     position: fixed;
     top:0;
     height:100vh;
 color:white;
-background-color: rgb(74, 72, 72);
-padding: 20px;
+background-color: #8b01fc;
+padding: 20px 0;
 
 }
 
-.side-box-users{
+.side-box-users1{
     text-align: center;
 display: block;
-    color:white;
-    background-color: brown;
+padding: 5px;
+    background-color:#daaffd;
   
 }
 
@@ -34,17 +121,21 @@ display: block;
    margin:0 auto;
    justify-content: center;
 }
-.floating-textbox {
+.floating-textbox1{
     position: absolute;
     background-color: #fff;
     border: 1px solid #000;
     padding:    0px;
     z-index: 1000;
   }
-  
-  .handle {
-    cursor: move;
-    background-color: #ccc;
-    padding: 5px;
-    margin-bottom: 5px;
+  .side-box1 button{
+    padding: 5px 10px;
+    border-radius: 5px;
+   cursor: pointer;
+    border: none;
+    background-color:  #8b01fc;
+    border: 2px solid white;
+    color: #fff;
+    
   }
+

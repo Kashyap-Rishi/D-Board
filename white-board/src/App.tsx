@@ -169,7 +169,7 @@ const App=() => {
 <Routes>
   <Route path="/" element={<Home/>}/>
 <Route  path="/rooms-join" element={<Forms uuid={uuid} socket={socket} setUser={setUser}/>}/>
-<Route  path="/:roomId" element={<Room user={user} socket={socket} users={users}/>}/>
+<Route path="/:roomId" element={<Room user={user} socket={socket} users={users} setUsers={setUsers} />} />
 <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="/signup" element={<Signup onSignup={handleSignup} />} />
 

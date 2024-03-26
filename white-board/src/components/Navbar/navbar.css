@@ -1,48 +1,42 @@
-/* Navbar.css */
-
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
-/* Root variables */
 :root {
-  --clr-bg-header: #3D8361;
-  --clr-btn: #3D8361;
-  --clr-dropdown: #1C6758;
-  --clr-nav-hover: #1E6F5C;
-  --clr-dropdown-hov: #289672;
-  --clr-dropdown-link-hov: #29BB89;
+  --clr-bg-header:#7743DB;
+  --clr-btn: #7f3aff;
+  --clr-dropdown: #6e3ad5;
+  --clr-nav-hover:   #8d64de;
+  --clr-dropdown-hov:  #b29ddc;
+  --clr-dropdown-link-hov: #ad8ee9;
   --clr-light: #FAFAFA;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 
 
-
-
-/* List Styles */
 ul {
   list-style: none;
 }
 
-/* Link Styles */
 a {
   text-decoration: none;
 }
 
-/* Header Styles */
 header {
   position: sticky;
-  top: 0;
+  top: 0px;
   background-color: var(--clr-bg-header);
   width: 100%;
   z-index: 1000;
 }
 
-/* Section Styles */
 section {
   position: relative;
-  height: calc(100vh - 3rem); /* Adjust height for the header */
+  height: calc(100vh - 3rem);
   width: 100%;
-
+ background-color: #FFFBF5;
   overflow: hidden;
 }
 
@@ -55,7 +49,6 @@ section {
   background-color: rgba(30, 130, 95, 0.5);
 }
 
-/* Container Styles */
 .container {
   max-width: 65rem;
   padding: 0 2rem;
@@ -64,25 +57,21 @@ section {
   position: relative;
 }
 
-/* Logo Container Styles */
 .logo-container {
   flex: 1;
   display: flex;
   align-items: center;
 }
 
-/* Navigation Button Styles */
 .nav-btn {
   flex: 3;
   display: flex;
 }
 
-/* Navigation Links Styles */
 .nav-links {
   flex: 2;
 }
 
-/* Login/Signup Styles */
 .log-sign {
   display: flex;
   justify-content: center;
@@ -90,7 +79,6 @@ section {
   flex: 1;
 }
 
-/* Logo Styles */
 .logo {
   color: var(--clr-light);
   font-size: 1.1rem;
@@ -104,7 +92,6 @@ section {
   font-weight: 300;
 }
 
-/* Button Styles */
 .btn {
   display: inline-block;
   padding: .5rem 1.3rem;
@@ -129,14 +116,12 @@ section {
   color: var(--clr-light);
 }
 
-/* Navigation Links List Styles */
 .nav-links > ul {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Navigation Link Styles */
 .nav-link {
   position: relative;
 }
@@ -161,7 +146,6 @@ section {
   transform: scale(1.1);
 }
 
-/* Dropdown Styles */
 .dropdown {
   position: absolute;
   top: 100%;
@@ -180,6 +164,7 @@ section {
 .dropdown-link > a {
   display: flex;
   background-color: var(--clr-light);
+  
   color: var(--clr-dropdown);
   padding: .5rem 1rem;
   font-size: .9rem;
@@ -197,11 +182,10 @@ section {
   border-bottom: 1px solid var(--clr-light);
 }
 
-.dropdown-link i {
+.dropdown-link i{
   transform: rotate(-90deg);
 }
 
-/* Arrow Styles */
 .arrow {
   position: absolute;
   width: 11px;
@@ -243,7 +227,6 @@ section {
   pointer-events: auto;
 }
 
-/* Hamburger Menu Container Styles */
 .hamburger-menu-container {
   flex: 1;
   display: none;
@@ -251,7 +234,6 @@ section {
   justify-content: flex-end;
 }
 
-/* Hamburger Menu Styles */
 .hamburger-menu {
   width: 2.5rem;
   height: 2.5rem;
@@ -289,7 +271,6 @@ section {
   transform: translateY(7px);
 }
 
-/* Hamburger Checkbox Styles */
 #check {
   position: absolute;
   top: 50%;
@@ -315,7 +296,18 @@ section {
   transform: translateY(0) rotate(45deg);
 }
 
-/* Media Query for Responsive Design */
+@keyframes animation {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
 @media (max-width: 920px) {
   .hamburger-menu-container {
     display: flex;
@@ -397,6 +389,37 @@ section {
   .nav-link:hover > a > i,
   .dropdown-link:hover>a>i {
     transform: rotate(360deg);
+  }
+
+  .dropdown-link > a {
+    background-color: transparent;
+    color: var(--clr-light);
+    padding: 1.2rem 2rem;
+    line-height: 1;
+  }
+
+  .dropdown.second .dropdown-link > a {
+    padding: 1.2rem 2rem 1.2rem 3rem;
+  }
+
+  .dropdown.second .dropdown.second .dropdown-link > a {
+    padding: 1.2rem 2rem 1.2rem 4rem;
+  }
+
+  .dropdown-link:not(:nth-last-child(2)) {
+    border-bottom: none;
+  }
+
+  .arrow {
+    z-index: 1;
+    background-color: var(--clr-btn);
+    left: 10%;
+    transform: scale(1.1) rotate(45deg);
+    transition: .5s;
+  }
+
+  .nav-link:hover .arrow {
+    background-color: var(--clr-nav-hover);
   }
 
   .dropdown .dropdown .arrow {
