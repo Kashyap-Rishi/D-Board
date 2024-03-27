@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Canvas = require("../../models/Canvas");
+const Canvas = require("../../models/canvas");
 
 router.post("/files", async (req, res) => {
   try {
