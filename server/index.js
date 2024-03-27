@@ -9,7 +9,12 @@ const authRoutes = require("./routes/auth/auth");
 const verifyToken = require("./routes/middlewares/tokenVerification");
 const socketLogic = require("./sockets/socketServer");
 const bodyParser = require('body-parser')
+
+
+const PORT = process.env.PORT || 8000;
 require('dotenv').config();
+
+
 
 const app = express();
 
@@ -35,7 +40,7 @@ app.post("/verifyToken", verifyToken, (req, res) => {
 
 socketLogic(io);
 
-const PORT = process.env.PORT || 8000;
+
 server.listen(PORT, () =>
     console.log(`Server is listening on port: ${PORT}`)
 );
