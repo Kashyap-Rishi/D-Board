@@ -1,5 +1,5 @@
 // Forms.tsx
-import { useState, useEffect } from 'react';
+import {  useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Socket } from 'socket.io-client';
 import CreateRoomForm from './CreateRoomForm/Createroom';
@@ -23,7 +23,7 @@ const Forms: React.FC<Props> = ({  socket, setUser }) => {
     navigate('/login');
    
   }
-  const [pdfData, setPdfData] = useState([]);
+  // const [pdfData, setPdfData] = useState([]);
 
   // Function to fetch saved works from the server
   const fetchSavedWorks = async () => {
@@ -32,7 +32,7 @@ const Forms: React.FC<Props> = ({  socket, setUser }) => {
       if (response.ok) {
         const data = await response.json();
         console.log("Fetched data",data);
-        setPdfData(data); // Set PDF data in state
+        // setPdfData(data); 
       } else {
         console.error('Failed to fetch saved works:', await response.text());
       }
