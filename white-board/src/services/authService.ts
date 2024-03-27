@@ -1,4 +1,10 @@
+
+
 export const handleLogin = (email: string, password: string): Promise<{ token: string }> => {
+
+    
+
+
     return new Promise<{ token: string }>((resolve, reject) => {
       // Send login request to backend
       fetch('https://drawingboard.onrender.com/auth/login', {
@@ -36,7 +42,7 @@ export const handleLogin = (email: string, password: string): Promise<{ token: s
   
   
 
-  export const handleSignup = (name: string, email: string, password: string) => {
+  export const handleSignup = (name: string, email: string, password: string, navigate: Function) => {
     // Send signup request to backend
     fetch('https://drawingboard.onrender.com/auth/signup', {
       method: 'POST',
@@ -53,12 +59,9 @@ export const handleLogin = (email: string, password: string): Promise<{ token: s
       })
       .then((data) => {
         console.log(data); 
-        
- 
-        window.location.href = '/login';
+        navigate('/login');
       })
       .catch((error) => {
         console.error('Error:', error);
       });
   };
-  

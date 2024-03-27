@@ -26,25 +26,25 @@ const Forms: React.FC<Props> = ({  socket, setUser }) => {
   // const [pdfData, setPdfData] = useState([]);
 
   // Function to fetch saved works from the server
-  const fetchSavedWorks = async () => {
-    try {
-      const response = await fetch('https://drawingboard.onrender.com/api/files');
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Fetched data",data);
-        // setPdfData(data); 
-      } else {
-        console.error('Failed to fetch saved works:', await response.text());
-      }
-    } catch (error) {
-      console.error('Error fetching saved works:', error);
-    }
-  };
+  // const fetchSavedWorks = async () => {
+  //   try {
+  //     const response = await fetch('https://drawingboard.onrender.com/api/files');
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log("Fetched data",data);
+  //       // setPdfData(data); 
+  //     } else {
+  //       console.error('Failed to fetch saved works:', await response.text());
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching saved works:', error);
+  //   }
+  // };
 
   // Fetch saved works when component mounts
-  useEffect(() => {
-    fetchSavedWorks();
-  }, []);
+  // useEffect(() => {
+  //   fetchSavedWorks();
+  // }, []);
 
 
 
