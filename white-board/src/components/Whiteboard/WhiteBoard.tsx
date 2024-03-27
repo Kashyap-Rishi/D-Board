@@ -296,7 +296,7 @@ const handleMouseMove = (e: React.MouseEvent) => {
   onMouseDown={handleMouseDown}
   onMouseMove={handleMouseMove}
   onMouseUp={handleMouseUp}>
-  <canvas
+  <canvas 
    ref={canvasRef}
 
    >

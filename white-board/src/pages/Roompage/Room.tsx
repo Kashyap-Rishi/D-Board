@@ -153,7 +153,7 @@ const Room = ({ user, socket, users, setUsers }: Props) => {
       };
 
       try {
-        const response = await fetch('http://localhost:8000/api/files', {
+        const response = await fetch('https://drawingboard.onrender.com/api/files', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

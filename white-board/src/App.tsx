@@ -11,7 +11,7 @@ import Signup from './components/Signup/Signup';
 import Home from './pages/Homepage/Home';
 import { useEffect, useState } from 'react';
 
-const server = "http://localhost:8000";
+const server = "https://drawingboard.onrender.com";
 
 interface JoinedUsers {
   name: string;
@@ -49,7 +49,7 @@ const App=() => {
   const handleLogin = (email: string, password: string): Promise<{ token: string }> => {
     return new Promise<{ token: string }>((resolve, reject) => {
       // Send login request to backend
-      fetch('http://localhost:8000/auth/login', {
+      fetch('https://drawingboard.onrender.com/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ const App=() => {
 
   const handleSignup = (name: string, email: string, password: string) => {
     // Send signup request to backend
-    fetch('http://localhost:8000/auth/signup', {
+    fetch('https://drawingboard.onrender.com/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

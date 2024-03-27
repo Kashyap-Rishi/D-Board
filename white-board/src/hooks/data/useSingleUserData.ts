@@ -17,7 +17,7 @@ const useSingleUserData = (): UserData | null => {
 
         if (email) {
      
-          const response = await fetch(`http://localhost:8000/users/userdata/${email}`);
+          const response = await fetch(`https://drawingboard.onrender.com/users/userdata/${email}`);
           if (response.ok) {
             const userData = await response.json();
             setUserData(userData);

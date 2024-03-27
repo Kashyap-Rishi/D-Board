@@ -7,7 +7,7 @@ const useAuth = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      fetch('http://localhost:8000/verifyToken', {
+      fetch('https://drawingboard.onrender.com/verifyToken', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
