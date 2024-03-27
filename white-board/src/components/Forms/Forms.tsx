@@ -1,5 +1,5 @@
 // Forms.tsx
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Socket } from 'socket.io-client';
 import CreateRoomForm from './CreateRoomForm/Createroom';
@@ -17,19 +17,39 @@ interface Props {
 const Forms: React.FC<Props> = ({ uuid, socket, setUser }) => {
   const isLoggedIn = useAuth();
   const navigate = useNavigate();
+  const [pdfData, setPdfData] = useState([]);
+
+  // Function to fetch saved works from the server
+  const fetchSavedWorks = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/files');
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Fetched data",data);
+        setPdfData(data); // Set PDF data in state
+      } else {
+        console.error('Failed to fetch saved works:', await response.text());
+      }
+    } catch (error) {
+      console.error('Error fetching saved works:', error);
+    }
+  };
+
+  // Fetch saved works when component mounts
+  useEffect(() => {
+    fetchSavedWorks();
+  }, []);
 
   if (!isLoggedIn) {
     navigate('/login');
-    return null; 
+    return null;
   }
 
   return (
     <>
       <Navbar />
       <div className="forms-container">
-        <div className="user-info">
-          {/* Add user info content here if needed */}
-        </div>
+      =
         <div className="form-section">
           <h1>Create Room</h1>
           <CreateRoomForm uuid={uuid} socket={socket} setUser={setUser} />
@@ -39,9 +59,13 @@ const Forms: React.FC<Props> = ({ uuid, socket, setUser }) => {
           <JoinRoomForm uuid={uuid} socket={socket} setUser={setUser} />
         </div>
       </div>
+      <div className="savedWorks">
+        {pdfData.map((pdf: any) => (
+          <embed key={pdf._id} src={pdf.imageData}  width="100%" height="500px" />
+        ))}
+      </div>
     </>
   );
 };
 
 export default Forms;
-

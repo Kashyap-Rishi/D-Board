@@ -6,33 +6,23 @@ import './navbar.css'
 import { Link } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import useAuth from '../../hooks/auth/useAuth';
-import useUserData from '../../hooks/data/useSingleUserData';
+import useSingleUserData from '../../hooks/data/useSingleUserData';
+
 
 const Navbar = () => {
   const navigate = useNavigate();
   const isLoggedIn = useAuth(); 
-  const { userData, loading: userDataLoading, error: userDataError, fetchSingleUserData } = useUserData();
+  const userData = useSingleUserData();
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
   };
 
-  React.useEffect(() => {
-    if (isLoggedIn && userDataLoading && userDataError) {
-      const email = localStorage.getItem('email');
-      if (email) {
-        fetchSingleUserData(email);
-      }
-    }
-  }, [isLoggedIn, userDataLoading, userDataError, fetchSingleUserData]);
 
-  const renderUserData = () => {
-    if (userDataLoading) return <span>Loading...</span>;
-    if (userDataError) return <span>Error: {userDataError.message}</span>;
-    if (!userData) return null;
-    return <span>{userData.name}</span>;
-  };return(
+
+
+  return(
         <>
         <header>
             <div className="container">
@@ -159,7 +149,7 @@ const Navbar = () => {
                     {isLoggedIn ? (
                                 <>
                             
-                            {renderUserData()}
+                            <span className="usr-nm">{userData?.name}</span>
 
                                     <button onClick={handleLogout} className="btn transparent">Log out</button>
                                 </>

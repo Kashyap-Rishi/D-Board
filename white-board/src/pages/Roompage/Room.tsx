@@ -101,27 +101,77 @@ const Room = ({ user, socket, users, setUsers }: Props) => {
     window.history.back(); 
   };
 
-  const downloadCanvasAsPDF = () => {
+
+  // Existing code...
+
+  const downloadCanvasAsPDF = async () => {
     const canvas = canvasRef.current;
     if (canvas) {
-      // Create an instance of jsPDF in landscape orientation ('l'), units in pixels ('px'), and format
       const pdf = new jsPDF({
         orientation: 'l',
         unit: 'px',
         format: [canvas.width, canvas.height]
       });
-      
-      // Convert the canvas to a data URL
-      const canvasImage = canvas.toDataURL('image/png');
-      
-      // Add the image to the PDF. Parameters are image URL, format, x, y, width, height
-      pdf.addImage(canvasImage, 'PNG', 0, 0, canvas.width, canvas.height);
-      
-      // Save the created PDF
-      pdf.save('canvas-drawing.pdf');
-    }
-  };
   
+      // Convert canvas to data URL
+      const canvasImage = canvas.toDataURL('image/png');
+  
+      // Add canvas image to PDF
+      pdf.addImage(canvasImage, 'PNG', 0, 0, canvas.width, canvas.height);
+  
+      // Convert PDF to Blob
+      const pdfBlob = pdf.output('blob');
+  
+      // Create Blob URL for the PDF
+      const pdfBlobUrl = URL.createObjectURL(pdfBlob);
+  
+      // Create a link element for local download
+      const localDownloadLink = document.createElement('a');
+      localDownloadLink.href = pdfBlobUrl;
+      localDownloadLink.download = "canvas.pdf"; // Set the download attribute for local download
+  
+      // Append the link to the body and click it to trigger local download
+      document.body.appendChild(localDownloadLink);
+      localDownloadLink.click();
+  
+      // Clean up: remove the link and revoke the Blob URL
+      document.body.removeChild(localDownloadLink);
+      URL.revokeObjectURL(pdfBlobUrl);
+  
+          // Convert Blob to data URL
+    const reader = new FileReader();
+    reader.readAsDataURL(pdfBlob);
+    reader.onloadend =async  () => {
+      const base64data = reader.result as string;
+
+      // Save PDF to the database
+      const email = localStorage.getItem('email') || ''; // Provide email if available
+      const payload = {
+        fileName: 'canvas.pdf',
+        imageData: base64data,
+        email: email
+      };
+
+      try {
+        const response = await fetch('http://localhost:8000/api/files', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          console.log('Canvas data saved successfully in the database');
+        } else {
+          console.error('Failed to save canvas data in the database:', await response.text());
+        }
+      } catch (error) {
+        console.error('Error saving canvas data in the database:', error);
+      }
+    };
+  }
+};
 
 
   return (

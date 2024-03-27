@@ -161,6 +161,11 @@ section {
   position: relative;
 }
 
+.usr-nm{
+  color: white;
+  padding-right: 40px;
+}
+
 .dropdown-link > a {
   display: flex;
   background-color: var(--clr-light);

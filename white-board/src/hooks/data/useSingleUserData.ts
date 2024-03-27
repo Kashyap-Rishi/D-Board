@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface UserData {
   name: string;
@@ -6,39 +6,41 @@ interface UserData {
   password: string;
 }
 
-const useSingleUserData = () => {
+const useSingleUserData = (): UserData | null => {
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<Error | null>(null);
 
-  const fetchSingleUserData = async (email: string) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`/users/userdata/${email}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch user data');
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+     
+        const email = localStorage.getItem('email');
+
+        if (email) {
+     
+          const response = await fetch(`http://localhost:8000/users/userdata/${email}`);
+          if (response.ok) {
+            const userData = await response.json();
+            setUserData(userData);
+            console.log(userData);
+          } else {
+            console.error('Failed to fetch user data:', response.statusText); 
+          }
+        } else {
+          console.error('Email not found in local storage'); 
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error); 
       }
-      const data = await response.json();
-      console.log('Fetched user data:', data); // Log fetched data
-      // Ensure the response data matches the UserData interface before setting it
-      const userDataFromResponse: UserData = {
-        name: data.name,
-        email: data.email,
-        password: data.password
-      };
-      setUserData(userDataFromResponse);
-      setLoading(false);
-    } catch (err) {
-      const errorObject = err as Error;
-      setError(errorObject);
-      setLoading(false);
-    }
-  };
+    };
 
-  console.log('Stored user data:', userData); // Log stored data
+    fetchUserData();
 
-  return { userData, loading, error, fetchSingleUserData };
+  }, []);
+
+  return userData;
 };
 
+
 export default useSingleUserData;
+
 
