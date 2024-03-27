@@ -18,6 +18,12 @@ const Signup = () => {
 
   return (
     <div className="signup-container">
+         <div className="top-bar">
+        <Link to="/">
+          <span className="back-arrow">{'<'}</span>
+          <span className="home-m">Home</span>
+        </Link>
+      </div>
       <h2>Signup</h2>
       <form onSubmit={handleSubmit}>
         <input

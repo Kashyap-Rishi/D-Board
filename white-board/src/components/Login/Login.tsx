@@ -3,16 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { handleLogin } from '../../services/authService';
 import './login.css';
 
-
-
-
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  
-
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,14 +18,17 @@ const Login = () => {
       })
       .catch((error) => {
         console.error('Login failed:', error);
-   
       });
   };
 
-
-
   return (
     <div className="login-container">
+      <div className="top-bar">
+        <Link to="/">
+          <span className="back-arrow">{'<'}</span>
+          <span className="home-m">Home</span>
+        </Link>
+      </div>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -57,4 +54,5 @@ const Login = () => {
 };
 
 export default Login;
+
 
