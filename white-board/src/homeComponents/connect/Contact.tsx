@@ -1,4 +1,4 @@
-import React from 'react'
+
 import './connect.css'
 
 import ContactPage from "../contactPage/ContactPage";

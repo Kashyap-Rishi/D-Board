@@ -1,7 +1,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
+
 import './navbar.css'
 import { Link } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';

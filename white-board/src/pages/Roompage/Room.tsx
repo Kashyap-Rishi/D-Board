@@ -36,12 +36,13 @@ interface Props {
 interface Element {
   type: string;
   offsetX: number;
-  height: number;
-  width: number;
   offsetY: number;
-  path: number[][];
+  height?: number;
+  width?: number;
+  path?: Point[]; // Making path optional
   stroke: string;
 }
+type Point = [number, number];
 
 const Room = ({ user, socket, users, setUsers }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
