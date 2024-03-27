@@ -9,6 +9,7 @@ import useAuth from '../../hooks/auth/useAuth';
 import useSingleUserData from '../../hooks/data/useSingleUserData';
 
 
+
 const Navbar = () => {
   const navigate = useNavigate();
   const isLoggedIn = useAuth(); 
@@ -16,7 +17,8 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigate('/');
+   
+    navigate('/login');
   };
 
 
@@ -146,7 +148,7 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <div className="log-sign" style={{'--i': '1.8s'}as any}>
-                    {isLoggedIn ? (
+                    {isLoggedIn? (
                                 <>
                             
                             <span className="usr-nm">{userData?.name}</span>
