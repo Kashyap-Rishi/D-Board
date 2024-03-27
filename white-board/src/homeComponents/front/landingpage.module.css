@@ -89,6 +89,10 @@ width:40%;
   color: #999;
 }
 
+.cbRoom{
+  color:white;
+}
+
 @media screen and (max-width: 768px) {
   .mainlanding {
     flex-direction: column;

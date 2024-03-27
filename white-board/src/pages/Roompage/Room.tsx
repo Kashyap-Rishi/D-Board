@@ -9,7 +9,7 @@ import './room.css'
 
 import { Socket } from 'socket.io-client';
 import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../homeComponents/footer/Footer";
+
 
 
 interface JoinedUsers {
@@ -39,7 +39,7 @@ interface Element {
   offsetY: number;
   height?: number;
   width?: number;
-  path?: Point[]; // Making path optional
+  path?: Point[]; 
   stroke: string;
 }
 type Point = [number, number];
@@ -334,7 +334,7 @@ const Room = ({ user, socket, users, setUsers }: Props) => {
             />
           </div>
 
-<Footer/>
+
     </div>
   )
 }

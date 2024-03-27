@@ -1,39 +1,37 @@
-/* joinroom.css */
 
-/* Form container */
 .joinroom-form {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: #FFFBF5;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
-  /* Input group styles */
+
   .joinroom-input-group {
     margin-bottom: 20px;
   }
   
-  /* Input field styles */
+
   .joinroom-input {
     padding: 10px;
-    border: 1px solid #ccc; /* Add a border for better visibility */
+    border: 1px solid #ccc; 
     border-radius: 5px;
     font-size: 16px;
-    width: 300px; /* Set a fixed width or adjust as needed */
+    width: 300px;
   }
   
-  /* Placeholder text styles */
+  
   .joinroom-input::placeholder {
-    color: #999; /* Light gray placeholder text color */
+    color: #999; 
   }
   
-  /* Button styles */
+
   .joinroom-button {
     padding: 10px 20px;
-    background-color: #007bff; /* Blue background color */
-    color: #fff; /* White text color */
+    background-color:  #5b25be; 
+    color: #fff; 
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -41,6 +39,12 @@
   }
   
   .joinroom-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color:  #3c1682; 
+  }
+
+  .error-message-j{
+    text-align: left;
+    color: red;
+    margin-top: 10px;
   }
   

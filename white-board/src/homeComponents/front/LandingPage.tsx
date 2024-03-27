@@ -1,6 +1,21 @@
+import { useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/auth/useAuth';
 import styles from './landingpage.module.css';
 
 const LandingPage = () => {
+
+  const isLoggedIn = useAuth(); // Check if user is logged in
+  const navigate = useNavigate();
+
+  const handleCollaborateClick = () => {
+    if (isLoggedIn) {
+      navigate('/rooms-join'); // Navigate to rooms-join if user is logged in
+    } else {
+      navigate('/login'); // Navigate to login if user is not logged in
+    }
+  };
+
+
   return (
     <div className={styles.mainlanding}>
       <div className={styles.imageContainer1}>
@@ -18,7 +33,7 @@ const LandingPage = () => {
         <div className={styles.buttons}>
           <button className={styles.createButton}>Create a Diagram</button>
           <p className={styles.orText}></p>
-          <button className={styles.collaborateButton}>Collaborate with team</button>
+          <button className={styles.collaborateButton} onClick={handleCollaborateClick}>Collaborate with team</button>
         </div>
       </div>
       <div className={styles.imageContainer2}>

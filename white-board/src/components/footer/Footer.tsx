@@ -4,7 +4,8 @@ const Footer = () => {
   return (
 <footer className="footer">
   <div className="footer__addr">
-    <h1 className="footer__logo">Sketchflow</h1>
+            <img src="images/newlogo.png"/>
+              
 
     
     <form className="subscribe-form">
@@ -73,7 +74,7 @@ const Footer = () => {
   </ul>
   
   <div className="legal">
-    <p>&copy; 2019 Something. All rights reserved.</p>
+    <p>&copy; 2024 Something. All rights reserved.</p>
     
     <div className="legal__links">
       <span>Made with <span className="heart">♥</span> by Kashyap</span>

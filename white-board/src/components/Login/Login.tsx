@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { handleLogin } from '../../services/authService';
 import './login.css';
 
 
-interface LoginProps {
-  onLogin: (email: string, password: string) => Promise<{ token: string }>;
-}
 
-const Login: React.FC<LoginProps> = ({ onLogin }) => {
+
+const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,7 +16,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onLogin(email, password)
+    handleLogin(email, password)
       .then(({ token }) => {
         localStorage.setItem('token', token);
         localStorage.setItem('email', email);

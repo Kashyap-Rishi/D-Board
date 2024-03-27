@@ -62,7 +62,13 @@ section {
   display: flex;
   align-items: center;
 }
-
+.logo-container img{
+  height:50px;
+  width:200px;
+}
+.hm-link{
+  color: white;
+}
 .nav-btn {
   flex: 3;
   display: flex;
@@ -108,6 +114,7 @@ section {
 .btn.transparent:hover {
   background-color: var(--clr-light);
   color: var(--clr-btn);
+  cursor: pointer;
 }
 
 .btn.transparent,

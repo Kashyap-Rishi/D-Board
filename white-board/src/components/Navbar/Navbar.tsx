@@ -16,7 +16,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigate('/login');
+    navigate('/');
   };
 
 
@@ -29,14 +29,14 @@ const Navbar = () => {
                 <input type="checkbox" name="check" id="check" />
                 <div className="logo-container">
                    
-                    <h3 className="logo"><span>SketchFlow</span></h3>
+                   <img src="images/newlogo.png"/>
                 </div>
 
                 <div className="nav-btn">
                     <div className="nav-links">
                         <ul>
                             <li className="nav-link" style={{'--i': '.6s'}as any}>
-                                <a href="#">Home</a>
+                                <a ><Link className="hm-link" to="/">Home</Link></a>
                             </li>
                             <li className="nav-link" style={{'--i': '.85s'}as any}>
                                 <a href="#">Menu<FontAwesomeIcon icon={faCaretDown} /></a>

@@ -242,4 +242,56 @@ cursor: pointer;
 
 }
 
+@media screen and (max-width: 767px){
+
+  
+.btn-features{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap:1em;
+  
+}
+
+.board-elements{
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  align-items: flex-start;
+}
+
+  .tool-options {
+margin: 0 10px;
+    display: flex;
+  }
+  
+  .tool-option {
+    display: flex;
+    align-items: center;
+    padding: 0 4% 0 0;
+    
+  }
+  
+  .tool-label {
+    margin-left: 5px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .color-picker {
+    margin: 0 0px;
+  }
+
+  .canvas-box1{
+    height:600px;
+
+margin: 50px 0px 100px;
+
+    
+}
+
+}
+
+
+
 

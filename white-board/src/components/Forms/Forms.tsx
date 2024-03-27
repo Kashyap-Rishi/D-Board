@@ -7,16 +7,22 @@ import JoinRoomForm from './JoinRoomForm/Joinroom';
 import useAuth from '../../hooks/auth/useAuth';
 import Navbar from '../Navbar/Navbar';
 import './forms.css';
+import Footer from '../footer/Footer';
 
 interface Props {
-  uuid: () => string;
+  
   socket: Socket;
   setUser: (user: { name: string; userId: string; roomId: string; host: boolean; presenter: boolean }) => void;
 }
 
-const Forms: React.FC<Props> = ({ uuid, socket, setUser }) => {
+const Forms: React.FC<Props> = ({  socket, setUser }) => {
+  
   const isLoggedIn = useAuth();
   const navigate = useNavigate();
+  if (!isLoggedIn) {
+    navigate('/login');
+   
+  }
   const [pdfData, setPdfData] = useState([]);
 
   // Function to fetch saved works from the server
@@ -40,10 +46,7 @@ const Forms: React.FC<Props> = ({ uuid, socket, setUser }) => {
     fetchSavedWorks();
   }, []);
 
-  if (!isLoggedIn) {
-    navigate('/login');
-    return null;
-  }
+
 
   return (
     <>
@@ -52,18 +55,19 @@ const Forms: React.FC<Props> = ({ uuid, socket, setUser }) => {
       
         <div className="form-section">
           <h1>Create Room</h1>
-          <CreateRoomForm uuid={uuid} socket={socket} setUser={setUser} />
+          <CreateRoomForm socket={socket} setUser={setUser} />
         </div>
         <div className="form-section">
           <h1>Join Room</h1>
-          <JoinRoomForm uuid={uuid} socket={socket} setUser={setUser} />
+          <JoinRoomForm socket={socket} setUser={setUser} />
         </div>
       </div>
-      <div className="savedWorks">
+      {/* <div className="savedWorks">
         {pdfData.map((pdf: any) => (
           <embed key={pdf._id} src={pdf.imageData}  width="100%" height="500px" />
         ))}
-      </div>
+      </div> */}
+      <Footer/>
     </>
   );
 };

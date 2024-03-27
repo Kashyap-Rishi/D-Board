@@ -1,20 +1,19 @@
 import  { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { handleSignup } from '../../services/authService';
 import './signup.css'; // Import CSS file for styling
 
-interface SignupProps {
-  onSignup: (name: string, email: string, password: string) => void; // Update the type
-}
 
-const Signup: React.FC<SignupProps> = ({ onSignup }) => {
+const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSignup(name, email, password);
+    handleSignup(name, email, password);
   };
+
 
   return (
     <div className="signup-container">

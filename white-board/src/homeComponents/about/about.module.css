@@ -83,6 +83,9 @@
     color: black;
   }
   @media screen and (max-width: 767px){
+    .imagescardmr{
+        margin-right: 0px;
+      }
     .rectanglegrandparent{
         margin-top: 50px;
         margin-bottom: 0px;
