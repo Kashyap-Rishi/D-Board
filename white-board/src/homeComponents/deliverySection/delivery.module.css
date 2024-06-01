@@ -56,9 +56,12 @@ section {
 padding: 5rem 12%;
 font-family: sans-serif;
 }
+.features{
+  justify-content: center;
+}
 
 .feature {
-  position: relative;
+  position:relative;
   max-width: 21rem;
   height: 14rem;
   margin: 2rem auto;

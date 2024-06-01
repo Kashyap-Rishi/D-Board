@@ -19,7 +19,7 @@ const Contact = () => {
 }
      <div className="hed_sec">
         <div className="hed1">
-<span> Have a project in mind?</span>
+<span> Have something in mind?</span>
         </div>
         <div className="hed2">
             <span>Do not hesitate to say hello.</span>

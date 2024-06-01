@@ -11,22 +11,22 @@ const useAuth = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, // Include token in the Authorization header
+          'Authorization': `Bearer ${token}`,
         },
       })
         .then((response) => {
           if (response.ok) {
-            setIsLoggedIn(true); // Token is valid
+            setIsLoggedIn(true);
           } else {
-            setIsLoggedIn(false); // Token is invalid
+            setIsLoggedIn(false);
           }
         })
         .catch((error) => {
           console.error('Error:', error);
-          setIsLoggedIn(false); // Error occurred, assume user is not logged in
+          setIsLoggedIn(false);
         });
     } else {
-      setIsLoggedIn(false); // No token found
+      setIsLoggedIn(false); 
     }
   }, []);
 

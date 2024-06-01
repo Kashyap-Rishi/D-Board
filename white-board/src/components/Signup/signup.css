@@ -11,6 +11,25 @@
   .signup-container h2 {
     margin-bottom: 20px;
   }
+  .top-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Adjust margin as needed */
+  }
+  
+  .back-arrow {
+    margin-right: 10px; /* Adjust margin as needed */
+  }
+  
+  .home-m {
+    text-decoration: none;
+    color: #333; /* Adjust color as needed */
+  }
+  
+  /* Optional: Hover effect for the home link */
+  .home-m:hover {
+    text-decoration: underline;
+  }
   
   .signup-container input[type="text"],
   .signup-container input[type="email"],

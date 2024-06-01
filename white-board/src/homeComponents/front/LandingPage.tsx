@@ -31,7 +31,7 @@ const LandingPage = () => {
           Make a polished, professional diagram for free with SketchFlow. No matter what you have in mind, we have the tools you need to build it. Make an account and start diagramming today.
         </p>
         <div className={styles.buttons}>
-          <button className={styles.createButton}>Create a Diagram</button>
+          <button className={styles.createButton} onClick={handleCollaborateClick}>Create a Diagram</button>
           <p className={styles.orText}></p>
           <button className={styles.collaborateButton} onClick={handleCollaborateClick}>Collaborate with team</button>
         </div>
