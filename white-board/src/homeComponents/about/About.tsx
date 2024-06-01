@@ -7,13 +7,13 @@ const About= () =>{
                     <div className={styles.smallhead}>Simple and easy to use</div>
                     <div className={styles.bigheadparent}><h1 className={styles.bighead}><p className={styles.whitehow}>Get the best</p>Sketch Book for your creativity.</h1></div>
                     <div className={styles.pointsmr}>
-                        <p>Access the top 1% of talent on Upwork, and a full suit of hybrid workforce management tools. This is how innovation works now.</p>
+                        <p>Easily create an account and register with secure authentication to access and participate in sessions.</p>
                         <br/>
-                        <p>Access expert talent to fill your skill gaps</p>
+                        <p>Generate unique room IDs instantly, share them with friends.</p>
                         <br/>
-                        <p>Control your workflow: hire,classify and pay your talent</p>
+                        <p>Collaborate in real-time on drawings and diagrams with integrated chat</p>
                         <br/>
-                        <p>Partner with Upwork for end-to-end support</p>
+                        <p>Download and save your collaborative work securely for future reference and sharing.</p>
                     </div>
                     <div style={{paddingBottom:"2em"}}>
                      <div className={styles.buttonrectangularcard}>Learn More</div>   
